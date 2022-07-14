@@ -1,5 +1,6 @@
 package com.example.dimac.whatstheweather;
 
+import android.content.Context;
 import android.nfc.Tag;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -9,6 +10,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -48,6 +50,8 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "You did not enter a city", Toast.LENGTH_SHORT).show();
         }else {
             jsonBodyRequest(editTextContent);
+            InputMethodManager mgr = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            mgr.hideSoftInputFromWindow(editText.getWindowToken(), 0);
         }
     }
 
@@ -92,7 +96,6 @@ public class MainActivity extends AppCompatActivity {
         RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
         queue.add(jsonObjectRequest);
 
-
     }
 
     @Override
@@ -116,7 +119,9 @@ public class MainActivity extends AppCompatActivity {
                 if (editTextContent.equals("")) {
                     Toast.makeText(getApplicationContext(), "You did not enter a city", Toast.LENGTH_SHORT).show();
                 } else {
-                jsonBodyRequest(editTextContent);
+                    jsonBodyRequest(editTextContent);
+                    InputMethodManager mgr = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    mgr.hideSoftInputFromWindow(editText.getWindowToken(), 0);
                 }
                 return true;
             }
